@@ -64,4 +64,4 @@ get_company_prices("MSFT", period="1mo")  # Get Microsoft's monthly stock prices
 
 ## License
 
-This project is created for demonstration purposes at PyCon India 2025.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
