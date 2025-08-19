@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@modelcontextprotocol/inspector": "^0.16.3",
+    "node": "^24.6.0"
+  }
+}
