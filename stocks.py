@@ -41,7 +41,6 @@ def get_company_details(ticker: str) -> str:
     
     return json.dumps(company_info, indent=4)
 
-
 @mcp.tool()
 def get_company_prices(ticker: str,period='1mo') -> str:
     """
@@ -62,7 +61,6 @@ def get_company_prices(ticker: str,period='1mo') -> str:
     
     return json.dumps(price_history.to_dict(orient='records'), indent=4,default=str)    
 
-
 # Add a dynamic greeting resource
 @mcp.resource("companies://")
 def get_company_tickers_all() -> str:
@@ -82,7 +80,6 @@ def get_company_tickers_all() -> str:
         mcp.logger.error(f"Error decoding JSON from tickers file: {e}")
         return "Error reading tickers data."
     
-
 @mcp.resource("company://{ticker}")
 def get_company_ticker(ticker: str) -> str:
     """
