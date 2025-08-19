@@ -120,6 +120,7 @@ def analyze_company_stock(ticker: str) -> str:
     Use the company details and stock prices to support your analysis."""
 
     return pormpt
+
 if __name__ == "__main__":
     # Initialize and run MCP server
     mcp.run(transport="stdio")
