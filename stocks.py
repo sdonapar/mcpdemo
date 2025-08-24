@@ -61,7 +61,6 @@ def get_company_prices(ticker: str,period='1mo') -> str:
     
     return json.dumps(price_history.to_dict(orient='records'), indent=4,default=str)    
 
-# Add a dynamic greeting resource
 @mcp.resource("companies://")
 def get_company_tickers_all() -> str:
     """
@@ -79,7 +78,8 @@ def get_company_tickers_all() -> str:
     except json.JSONDecodeError as e:
         mcp.logger.error(f"Error decoding JSON from tickers file: {e}")
         return "Error reading tickers data."
-    
+
+# Add a dynamic company ticker resource    
 @mcp.resource("company://{ticker}")
 def get_company_ticker(ticker: str) -> str:
     """
