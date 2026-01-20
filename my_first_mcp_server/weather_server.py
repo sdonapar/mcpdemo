@@ -1,12 +1,25 @@
+import sys
 from typing import Any
 import httpx
 from mcp.server.fastmcp import FastMCP
 import yfinance as yf
 import json
+import logging
+
+# Configure logger
+logging.basicConfig(
+    level=logging.INFO, # Set the minimum logging level to output (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+
+logger = logging.getLogger(__name__)
 
 mcp = FastMCP("weather")
 
-NEW_API_BASE = "https://api.weather.gov"
+NSW_API_BASE = "https://api.weather.gov"
 USER_AGENT = "weather-app/1.0"
 
 async def make_nws_request(url: str) -> dict[str,Any] | None:
@@ -25,7 +38,7 @@ async def make_nws_request(url: str) -> dict[str,Any] | None:
             response.raise_for_status()
             return response.json()
         except Exception as e:
-            mcp.logger.error(f"Error fetching data from NWS API: {e}")
+            logger.error(f"Error fetching data from NWS API: {e}")
             return None
 
 def format_alert(feature: dict) -> str:
@@ -50,7 +63,7 @@ async def get_alerts(state: str) -> str:
     Returns:
         str: Formatted string of weather alerts or a message if no alerts are found.
     """
-    url = f"{NEW_API_BASE}/alerts/active?area={state}"
+    url = f"{NSW_API_BASE}/alerts/active?area={state}"
     data = await make_nws_request(url)
     
     if not data or "features" not in data:
@@ -73,7 +86,7 @@ async def get_forecast(latitude: float, longitude: float) -> str:
     Returns:
         str: Formatted string of the weather forecast or an error message.
     """
-    points_url = f"{NEW_API_BASE}/points/{latitude},{longitude}"
+    points_url = f"{NSW_API_BASE}/points/{latitude},{longitude}"
     points_data = await make_nws_request(points_url)
     
     if not points_data:
@@ -103,4 +116,5 @@ Forecast: {period['detailedForecast']}
 
 if __name__ == "__main__":
     # Initialize and run MCP server
-    mcp.run(transport="stdio")
+    mcp.run(transport="sse")
+    #mcp.run()

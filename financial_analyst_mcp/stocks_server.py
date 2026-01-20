@@ -2,6 +2,22 @@ from typing import Any
 from mcp.server.fastmcp import FastMCP
 import yfinance as yf
 import json
+from dotenv import load_dotenv
+import sys
+import logging
+
+load_dotenv()
+
+# Configure logger
+logging.basicConfig(
+    level=logging.INFO, # Set the minimum logging level to output (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+
+logger = logging.getLogger(__name__)
 
 mcp = FastMCP("Stocks")
 
@@ -20,7 +36,7 @@ def get_company_info(ticker: str) -> dict[str, Any] | None:
         info = stock.info
         return info
     except Exception as e:
-        mcp.logger.error(f"Error fetching company info for {ticker}: {e}")
+        logger.error(f"Error fetching company info for {ticker}: {e}")
         return None
     
 @mcp.tool()
@@ -56,7 +72,7 @@ def get_company_prices(ticker: str,period='1mo') -> str:
         stock = yf.Ticker(ticker)
         price_history = stock.history(period=period)
     except Exception as e:
-        mcp.logger.error(f"Error fetching stock prices for {ticker}: {e}")
+        logger.error(f"Error fetching stock prices for {ticker}: {e}")
         return f"Unable to fetch prices for ticker: {ticker}"
     
     return json.dumps(price_history.to_dict(orient='records'), indent=4,default=str)    
@@ -76,7 +92,7 @@ def get_company_tickers_all() -> str:
     except FileNotFoundError:
         return "Tickers file not found."
     except json.JSONDecodeError as e:
-        mcp.logger.error(f"Error decoding JSON from tickers file: {e}")
+        logger.error(f"Error decoding JSON from tickers file: {e}")
         return "Error reading tickers data."
 
 # Add a dynamic company ticker resource    
@@ -97,7 +113,7 @@ def get_company_ticker(ticker: str) -> str:
             company_ticker = [t for t in tickers if t["ticker"].upper() == ticker.upper()]
             return json.dumps(company_ticker[0], indent=4) if company_ticker else f"No details found for ticker: {ticker}"
         except json.JSONDecodeError as e:
-            mcp.logger.error(f"Error decoding JSON from tickers file: {e}")
+            logger.error(f"Error decoding JSON from tickers file: {e}")
             return "Error reading tickers data."
 
 @mcp.prompt()
