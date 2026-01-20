@@ -55,5 +55,6 @@ Modern LLMs are powerful but operate in isolation without structured access to t
 * [install uv](https://docs.astral.sh/uv/getting-started/installation/)
 * OpenAI API Keys/ Claude Desktop / Github Copilot
 * Visual Studio Code
+* [Install Node.Js](https://nodejs.org/en/download)
 
 
