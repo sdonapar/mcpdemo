@@ -8,7 +8,7 @@ dependencies = [
     "ddgs>=9.5.4",
     "duckdb>=1.4.3",
     "duckduckgo-search>=8.1.1",
-    "fastmcp>=2.14.3",
+    "fastmcp==2.14.4",
     "httpx>=0.28.1",
     "langchain-mcp-adapters>=0.2.1",
     "matplotlib>=3.10.5",

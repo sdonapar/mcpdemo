@@ -1,21 +1,13 @@
+#!/usr/bin/env python
+
 from typing import Any
 from mcp.server.fastmcp import FastMCP
 import yfinance as yf
 import json
 from dotenv import load_dotenv
-import sys
 import logging
 
 load_dotenv()
-
-# Configure logger
-logging.basicConfig(
-    level=logging.INFO, # Set the minimum logging level to output (DEBUG, INFO, WARNING, ERROR, CRITICAL)
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
-)
 
 logger = logging.getLogger(__name__)
 

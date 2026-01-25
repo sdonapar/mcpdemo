@@ -1,18 +1,15 @@
+#!/usr/bin/env python
+
 import sys
 from typing import Any
 import httpx
 from mcp.server.fastmcp import FastMCP
-import yfinance as yf
-import json
 import logging
 
 # Configure logger
 logging.basicConfig(
     level=logging.INFO, # Set the minimum logging level to output (DEBUG, INFO, WARNING, ERROR, CRITICAL)
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
 )
 
 logger = logging.getLogger(__name__)
@@ -116,5 +113,5 @@ Forecast: {period['detailedForecast']}
 
 if __name__ == "__main__":
     # Initialize and run MCP server
-    mcp.run(transport="sse")
+    mcp.run(transport="stdio")
     #mcp.run()

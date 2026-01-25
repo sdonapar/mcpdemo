@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 from fastmcp import Client
 import asyncio
